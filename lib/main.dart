@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import './question.dart';
+import './answer.dart';
 
 void main() {
   runApp(MyApp());
@@ -7,24 +9,37 @@ void main() {
 class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
+    return _MyAppState();
   }
 }
 
-class MyAppState extends State<MyApp> {
-  var questionIndex = 0;
+class _MyAppState extends State<MyApp> {
+  var _questionIndex = 0;
 
-  void answerQuestion() {
-    questionIndex = questionIndex + 1;
-    print(questionIndex);
+  void _answerQuestion() {
+    setState(() {
+      _questionIndex = _questionIndex + 1;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     var questions = [
-      'What\s your name',
-      'What\s your favourite color',
+      {
+        'id': 1,
+        'questionText': 'What\s your favourite color?',
+        'answer': ['Green', 'Blue', 'Red', 'Grey']
+      },
+      {
+        'id': 2,
+        'questionText': 'What\s your favourite company?',
+        'answer': ['Kodexolabs', 'Systems', 'Netsol', 'Saftsol']
+      },
+      {
+        'id': 3,
+        'questionText': 'What is your mentor\s profession?',
+        'answer': ['Cricketer', 'Footballer', 'Developer', 'Software Engineer']
+      },
     ];
 
     return MaterialApp(
@@ -34,13 +49,10 @@ class MyAppState extends State<MyApp> {
         ),
         body: Column(
           children: <Widget>[
-            Text(questions[0]),
-            ElevatedButton(
-                onPressed: () => answerQuestion(), child: Text('Answer 1')),
-            ElevatedButton(
-                onPressed: () => answerQuestion(), child: Text('Answer 2')),
-            ElevatedButton(
-                onPressed: () => answerQuestion(), child: Text('Answer 3')),
+            Question(questions[_questionIndex]['questionText']),
+            Answer(_answerQuestion),
+            Answer(_answerQuestion),
+            Answer(_answerQuestion),
           ],
         ),
       ),
